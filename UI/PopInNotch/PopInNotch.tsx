@@ -4,15 +4,12 @@ import {Animated, Dimensions, StyleSheet, Text, TextStyle, View, ViewStyle} from
 export type TPropsPopInNotch = {
   text: string;
   state: boolean;
+  bottom?: number;
   customContainerStyle?: ViewStyle;
   iconComponent?: React.ReactChild;
   customIconContainerStyle?: ViewStyle;
   customTextStyle?: TextStyle;
 };
-
-interface TPopInNotch extends TPropsPopInNotch {
-  bottom: number;
-}
 
 const {width: SCREENWIDTH} = Dimensions.get('window');
 
@@ -24,7 +21,7 @@ export default function PopInNotch({
   customIconContainerStyle,
   text,
   customTextStyle,
-}: TPopInNotch) {
+}: TPropsPopInNotch) {
   const opacity = React.useMemo(() => new Animated.Value(0), []);
 
   function animationRunner(toValue: number) {
@@ -41,9 +38,12 @@ export default function PopInNotch({
       setTimeout(() => animationRunner(0), 5000);
     }
   }, [state]);
-
+  if (!state) {
+    return null;
+  }
   return (
-    <Animated.View style={[styles.container, customContainerStyle, {opacity, bottom}]}>
+    <Animated.View
+      style={[styles.container, customContainerStyle, {opacity, bottom: bottom || 10}]}>
       <View style={styles.intermediateWrapper}>
         {iconComponent && (
           <View style={[styles.iconContainer, customIconContainerStyle]}>{iconComponent}</View>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     right: 10,
     position: 'absolute',
     width: (SCREENWIDTH * 2) / 3,
-    height: 50,
+    // height: 50,
     backgroundColor: 'blue',
   },
   intermediateWrapper: {
@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
   text: {
     fontWeight: 'bold',
