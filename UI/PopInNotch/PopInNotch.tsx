@@ -1,8 +1,7 @@
 import React from 'react';
 import {Animated, Dimensions, StyleSheet, Text, TextStyle, View, ViewStyle} from 'react-native';
 
-type TPopInNotch = {
-  bottom: number;
+export type TPropsPopInNotch = {
   text: string;
   state: boolean;
   customContainerStyle?: ViewStyle;
@@ -10,6 +9,10 @@ type TPopInNotch = {
   customIconContainerStyle?: ViewStyle;
   customTextStyle?: TextStyle;
 };
+
+interface TPopInNotch extends TPropsPopInNotch {
+  bottom: number;
+}
 
 const {width: SCREENWIDTH} = Dimensions.get('window');
 

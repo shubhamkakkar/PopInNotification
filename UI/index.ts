@@ -1,3 +1,3 @@
-import PopInNotchContainer from './PopInNotchContainer/PopInNotchContainer';
+import PopInNotch from './PopInNotch/PopInNotch';
 
-export {PopInNotchContainer};
+export {PopInNotch};
