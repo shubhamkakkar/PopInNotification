@@ -9,7 +9,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <BottomSheet headerTitle="Bottom Sheet" visible={state} onClose={toggleState}>
-        <View />
+        <View style={styles.random}>
+          <Button title="Click Me" onPress={() => setstate(!state)} />
+        </View>
       </BottomSheet>
       <Button title="Click Me" onPress={() => setstate(!state)} />
     </View>
@@ -19,5 +21,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  random: {
+    marginTop: 20,
   },
 });

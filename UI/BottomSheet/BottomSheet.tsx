@@ -43,18 +43,22 @@ export default function BottomSheet({headerTitle, visible, children, onClose}: M
 
   const Header = () => (
     <View style={styles.header}>
+      <View style={styles.cancelButtonWrapper}>
+        <TouchableOpacity {...{onPress}}>
+          <Text style={styles.cancelText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.headerText}>{headerTitle}</Text>
-      <TouchableOpacity style={styles.button} {...{onPress}}>
-        <Text style={styles.headerText}>cancel</Text>
-      </TouchableOpacity>
     </View>
   );
   return (
-    <Modal transparent visible={visible} animationType={Platform.OS === 'ios' ? 'slide' : 'fade'}>
-      <Animated.View style={[styles.modal]}>
-        <SafeAreaView style={styles.bottomArea}>
+    <Modal transparent visible={visible} animationType={'slide'}>
+      <Animated.View style={[styles.modal, styles.topBorderRadius]}>
+        <SafeAreaView style={[styles.bottomArea, styles.topBorderRadius]}>
           <Header />
-          <KeyboardAvoidingViewUI>{children}</KeyboardAvoidingViewUI>
+          <View style={[styles.childrenWrapper, styles.topBorderRadius]}>
+            <KeyboardAvoidingViewUI>{children}</KeyboardAvoidingViewUI>
+          </View>
         </SafeAreaView>
       </Animated.View>
     </Modal>
@@ -62,17 +66,18 @@ export default function BottomSheet({headerTitle, visible, children, onClose}: M
 }
 
 const styles = StyleSheet.create({
+  topBorderRadius: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
   modal: {
-    padding: 10,
+    position: 'absolute',
     marginLeft: '1%',
     marginRight: '1%',
-    position: 'absolute',
     bottom: 0,
     width: '98%',
     height: '75%',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -84,37 +89,26 @@ const styles = StyleSheet.create({
     zIndex: 24,
   },
   header: {
-    borderRadius: 10,
-    margin: 5,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
+    padding: 10,
+    marginHorizontal: 10,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-  button: {
-    height: 50,
-    width: 50,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    borderRadius: 45,
-    borderColor: '#CCC',
-  },
-  buttonText: {
-    color: '#333',
-    fontSize: 50,
-    alignSelf: 'center',
+    color: '#2196f3',
   },
   bottomArea: {
     height: '100%',
+  },
+  cancelButtonWrapper: {
     justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  cancelText: {
+    color: '#2196f3',
+  },
+  childrenWrapper: {
+    flex: 1,
   },
 });
