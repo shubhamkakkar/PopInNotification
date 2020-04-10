@@ -1,3 +1,4 @@
 import PopInNotch from './PopInNotch/PopInNotch';
-
-export {PopInNotch};
+import KeyboardAvoidingViewUI from './KeyboardAvoidingViewUI/KeyboardAvoidingViewUI';
+import BottomSheet from './BottomSheet/BottomSheet';
+export {PopInNotch, BottomSheet, KeyboardAvoidingViewUI};
