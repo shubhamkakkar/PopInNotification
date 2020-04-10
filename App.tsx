@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Button} from 'react-native';
+import React, {useState} from 'react';
+import {Button, StyleSheet, View, Text} from 'react-native';
 import {BottomSheet} from './UI';
+
 export default function App() {
   const [state, setstate] = useState<boolean>(false);
   function toggleState() {

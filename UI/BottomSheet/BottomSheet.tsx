@@ -1,14 +1,14 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useRef} from 'react';
 import {
+  TouchableOpacity,
   Animated,
   Dimensions,
   Modal,
-  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
+  PanResponder,
 } from 'react-native';
 import {KeyboardAvoidingViewUI} from '../';
 
@@ -30,6 +30,29 @@ export default function BottomSheet({
   children,
   onClose,
 }: ModalProps) {
+  const pan = useRef(new Animated.ValueXY()).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        pan.setOffset({
+          x: pan.x._value,
+          y: pan.y._value,
+        });
+      },
+      onPanResponderMove: (evt, grantState) => {
+        console.log({evt, grantState});
+        return Animated.event([null, {dx: pan.x, dy: pan.y}], {
+          useNativeDriver: true,
+        });
+      },
+      onPanResponderRelease: () => {
+        pan.flattenOffset();
+      },
+    }),
+  ).current;
+
   const translateY = React.useMemo(() => new Animated.Value(height), []);
 
   function animationStart(toValue: number) {
@@ -55,9 +78,11 @@ export default function BottomSheet({
     }
   }
 
+  console.log({pan});
+
   function Header() {
     return (
-      <View style={[styles.header, styles.topBorderRadius]}>
+      <View style={[styles.header, styles.topBorderRadius]} {...panResponder.panHandlers}>
         <TouchableOpacity {...{onPress: onPressCancel}}>
           <Text style={styles.cancelText}>Cancel</Text>
         </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {KeyboardAvoidingView, ScrollView, StyleSheet, Platform} from 'react-native';
+import {ScrollView, KeyboardAvoidingView, StyleSheet, Platform} from 'react-native';
 export default function KeyboardAvoidingViewUI({children}: {children: React.ReactNode}) {
   return (
     <KeyboardAvoidingView
